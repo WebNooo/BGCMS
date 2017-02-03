@@ -1,0 +1,10 @@
+$(document).ready(function() {$('.top-li a').click(function(event) {event.preventDefault();$('html, body').animate({scrollTop: 0}, 300);})});
+$(document).ready(function () {$("#top-nav .dropdown").hover(function() {$("ul", this).slideToggle(200);});});
+$(document).ready(function () {$(".nav-ul .dropdown").click(function() {$("ul", this).slideToggle(200);});});
+$(document).ready(function () {$("#search-icon").click(function() {$("#search-panel").slideToggle(200);});});
+$(document).ready(function () {$("#search-panel .close").click(function() {$("#search-panel").fadeOut(200);});});
+$(document).ready(function () {$("#modal-content .close").click(function() {$("#modal-box").fadeOut(200);});});
+$(document).ready(function () {$("#modal-content1 .close").click(function() {$("#modal-box1").fadeOut(200);});});
+$(document).ready(function () {$("#profile-button").click(function() {$("#profile-dropdown").slideToggle(200);});});
+$(document).ready(function () {$("#profile-button").click(function() {$(this).toggleClass("active");});});
+$(document).ready(function () {$("#auth-modal").click(function() {$("#modal-box1").fadeToggle(200);});});

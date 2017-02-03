@@ -1,0 +1,147 @@
+@import url(../fonts/ptsans/ptsans.css);
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+html,
+body,
+input,
+select,
+button,
+a {
+    font: 13px "PT Sans", Arial, Tahoma, sans-serif;
+    color: #999;
+}
+
+body {
+    line-height: 1;
+    overflow-x: hidden;
+    background: #f7f6f6;
+}
+
+input[type=checkbox],
+input[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+nav ul,
+ul,
+menu {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+ins {
+    background-color: #ff9;
+    color: #000;
+    text-decoration: none;
+}
+
+mark {
+    background-color: #ff9;
+    font-style: italic;
+    font-weight: 700
+}
+
+del {
+    text-decoration: line-through
+}
+
+abbr[title] {
+    border-bottom: 1px dotted;
+    cursor: help
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td,
+th {
+    padding: 0;
+}
+
+hr {
+    margin: 20px 0;
+    border-bottom: 1px dashed #ccc;
+}
+
+input,
+select {
+    vertical-align: middle;
+}
+
+.clr:after, 
+.center:after,
+#wrapper:after,
+.block-content:after,
+.short-story:after,
+.short-panel:after,
+.comment-post header:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+input[type=submit], 
+input[type=button], 
+button,
+select {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+.center, #wrapper {
+    width: 960px;
+    margin: 0 auto;
+}
+
+.clearfix {
+    clear: both;
+}
+
+#top-nav li a:hover,
+#search-bar button[type=submit]:hover {
+    background: rgba(255, 255, 255, 0.05);
+}

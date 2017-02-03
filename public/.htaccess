@@ -1,0 +1,24 @@
+RewriteEngine On
+    Options All -Indexes
+    Options +FollowSymlinks
+    AddDefaultCharset UTF-8
+    #www to not www
+        RewriteEngine On
+        RewriteCond %{SERVER_PORT} !^443$
+        RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
+
+        RewriteCond %{HTTP_HOST} ^www\.(.*) [NC]
+        RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+        RewriteRule ^ajax$    /shared/java/ajax.js [L]
+        RewriteRule ^function$    /shared/java/system.js [L]
+        RewriteRule ^photos/(.+)$    /shared/users/photos/$1 [L]
+        RewriteRule ^admin/(.+)$    /shared/admin/$1 [L]
+        RewriteRule ^java/(.+)$    /shared/java/$1 [L]
+
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule ^(.*)$  index.php [L,QSA]
+        RewriteCond %{REQUEST_URI} request_uri
+
+Options -Indexes
