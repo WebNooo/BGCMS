@@ -1,5 +1,4 @@
 <div style="background: #00a5bb; color: white; padding-bottom: 10px; width: 98%; height: 25px;">
-    <span>{id}</span>
     <span>{name}</span>
 </div>
 

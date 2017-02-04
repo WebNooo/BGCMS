@@ -15,7 +15,7 @@ final class Router
     {
         $file_handle = fopen(SYS . "/data/routing.php", "r");
         while (!feof($file_handle)) {
-            self::$line[] = explode('|', str_replace("{%index%}", config::$site_index_mode, fgets($file_handle)));
+            self::$line[] = explode('|', str_replace("{%index%}", config::$site_index_mode, trim(fgets($file_handle))));
         }
         fclose($file_handle);
         self::$routes = array_merge(self::$routes, self::$line);
@@ -53,7 +53,6 @@ final class Router
             if (strpos(self::$route[0], ':') !== false) {
                 self::$route[0] = str_replace(':any', '(.+)', str_replace(':num', '([0-9]+)', self::$route[0]));
             }
-            self::$logged = (isset(self::$route[3]) == true) ? true : false;
 
             self::$route[1] = preg_replace('#^' . self::$route[0] . '$#', self::$route[1], $requestedUrl);
             if (preg_match('#^' . self::$route[0] . '$#', $requestedUrl)) {
@@ -72,9 +71,10 @@ final class Router
         $controller = isset(self::$params[0]) ? self::$params[0] : $c_a[0];
         $action = isset(self::$params[1]) ? self::$params[1] : $c_a[1];
         $params = array_slice(self::$params, 2);
-        if (self::$logged) {
-            if (User::isUser()) return self::calling($controller, $action, $params); else Parse::$inform['info'] = "У вас нет доступа к данной странице";
-        } else return self::calling($controller, $action, $params);
+        if (self::$route[3] == "yes") {
+            if (User::isUser()) return self::calling($controller, $action, $params); else return Parse::$inform['info'] = "У вас нет доступа к данной странице";
+        } else
+            return self::calling($controller, $action, $params);
     }
 
     private static function calling($controller, $action, $params)

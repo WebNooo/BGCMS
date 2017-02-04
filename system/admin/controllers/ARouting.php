@@ -36,7 +36,7 @@ class ARouting
                                     <th>Аддресс</th>
                                     <th>Функция</th>
                                     <th>Название</th>
-                                    <th>Только авторизованным</th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -44,15 +44,15 @@ class ARouting
         $i = 0;
         $file = fopen(SYS . "/data/routing.php", "r");
         while (!feof($file)) {
-            $str = fgets($file);
+            $str = trim(fgets($file));
             if (!empty($str)) {
                 $list = explode('|', $str);
-                echo "
-                                    <tr>
+                $check = ($list[3] == "yes") ?  "checked" : "";
+                echo "              <tr>
                                         <td><input class='form-control' title='' type='text' name='route[$i-0]' value='$list[0]'/></td>
                                         <td><input class='form-control' title='' type='text' name='route[$i-1]' value='$list[1]'/></td>
                                         <td><input class='form-control' title='' type='text' name='route[$i-2]' value='$list[2]'/></td>
-                                        <td><input class='form-control' title='' type='text' name='route[$i-3]' value='$list[3]'/></td>
+                                        <td><div class='toggle-switch'><input class='toggle-switch__checkbox' title='' type='checkbox' name='route[$i-3]' $check /><i class='toggle-switch__helper'></i></div></td>
                                         <td><button class='btn btn--light btn--icon' onclick='deleteRow(this)'><i style='color: red;' class='zmdi zmdi-close'></i></button></td>
                                     </tr>";
                 $i++;
@@ -73,13 +73,14 @@ class ARouting
         $arr = array_chunk($data['route'], 4);
         $string = "";
         foreach ($arr as $value) {
-            $string .= $value[0] . "|" . $value[1] . "|" . $value[2] . "|" . $value[3] . "\n";
+            $check = (empty($value[3])) ? "no" : $value[3];
+            $string .= trim($value[0]) . "|" . trim($value[1]) . "|" . trim($value[2]) . "|" . $check . "\n";
         }
         $file = fopen(SYS . '/data/routing.php', "w");
         fwrite($file, $string);
         fclose($file);
 
-        AMain::jsi("Маршруты успешно сохранены");
+        AMain::jsi("success","Маршруты успешно сохранены");
     }
 
 }
