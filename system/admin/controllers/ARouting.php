@@ -47,7 +47,7 @@ class ARouting
             $str = trim(fgets($file));
             if (!empty($str)) {
                 $list = explode('|', $str);
-                $check = ($list[3] == "yes") ?  "checked" : "";
+                $check = ($list[3] == "yes") ? "checked" : "";
                 echo "              <tr>
                                         <td><input class='form-control' title='' type='text' name='route[$i-0]' value='$list[0]'/></td>
                                         <td><input class='form-control' title='' type='text' name='route[$i-1]' value='$list[1]'/></td>
@@ -80,7 +80,7 @@ class ARouting
         fwrite($file, $string);
         fclose($file);
 
-        AMain::jsi("success","Маршруты успешно сохранены");
+        AMain::jsi("success", "Маршруты успешно сохранены");
     }
 
 }

@@ -1,3 +1,5 @@
+/forum/:num-:any.html|CForum/forum/$1|Forum|no
+/forum/topic/:num-:any.html|CForum/topic/$1|Topic|no
 |{%index%}|Главная страница|no
 /post/:num-:any.html|CPost/fullPost/$1|Полная новость|no
 /post/edit/:num|CPost/editPost/$1|Редактирование новости|no

@@ -118,7 +118,7 @@ class AUsers
 
                                 <div class=\"contacts__info\">
                                     <strong>{$user['username']} <img src='{$status}' /></strong>
-                                    <span style='font-size:11px;'>" . str_replace("{%username%}", $user['title'], $user['style']) . "</span>
+                                    <span style='font-size:11px;'>" . str_replace("{%username%}", $user['title'], $user['admin_style']) . "</span>
                                     <small>{$user['email']}</small>
                                 </div>
 
