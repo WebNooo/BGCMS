@@ -54,7 +54,6 @@ class CMain
                 Temp::set("{content}", "<div id='SContent'>" . Temp::$result['content'] . "</div>");
             }
             Temp::set("{login}", Temp::$result['login']);
-            Temp::set("{speedbar}", Temp::$result['speedbar']);
             Temp::compile('main');
             echo Temp::$result['main'];
             Temp::gclear();
@@ -84,11 +83,19 @@ class CMain
         }
     }
 
+    static function genTitle(){
+        if (!empty(Router::$route[2])){
+            if (!empty(self::$title)) $title = " :: ".self::$title; else $title = "";
+            return config::$site_title . " :: " . Router::$route[2] . $title;
+        }else{
+            return config::$site_title;
+        }
+    }
+
     static function headers()
     {
-        if (empty(self::$title)) self::$title = (!empty(Router::$route[2])) ? config::$site_title . " :: " . Router::$route[2] : config::$site_title; else self::$title = config::$site_title . " :: " . self::$title;
         return "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=" . config::$site_charset . "\" />
-    <title>" . self::$title . "</title>
+    <title>" . self::genTitle() . "</title>
     <meta name=\"description\" content=\"" . config::$site_description . "\" />
     <meta name=\"keywords\" content=\"" . config::$site_keywords . "\" />
     <meta name=\"generator\" content=\"BLackGame (https://BGSrv.ru)\" />

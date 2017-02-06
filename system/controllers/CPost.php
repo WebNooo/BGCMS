@@ -10,7 +10,6 @@ class CPost
 
     static function index($page = "")
     {
-        CMain::$title = "Главная страница";
         self::$pages = self::pages($page);
         $posts = Mysql::query("SELECT posts.*, users.*, category.* FROM posts, users, category WHERE users.id = posts.author AND posts.category=category.id_cat AND posts.publish=1 ORDER BY posts.fixed desc, posts.add_date DESC LIMIT " . self::$pages['start'] . "," . config::$post_on_page);
         if (Mysql::num() > 0) {
@@ -80,7 +79,7 @@ class CPost
                     CComments::addComments();
                     CComments::comments($id);
                     CMain::$title = $post['title'];
-                    Temp::$result['speedbar'] .= " » " . $post['title'];
+                    //Temp::$result['speedbar'] .= " » " . $post['title'];
 
                     Mysql::query("SELECT * FROM comments WHERE id_p='{$post['id_post']}'");
                     if (Mysql::num() >= 10) {
@@ -108,11 +107,11 @@ class CPost
         if (Parse::isValid($type) && Parse::isValid($data)) {
             switch ($type) {
                 case "date":
-                    CMain::$title = "Новости за " . $data;
+                    CMain::$title = "по дате " . $data;
                     $sort = "posts.sort_date='{$data}' AND";
                     break;
                 case "category":
-                    CMain::$title = "Новости из категории " . $data;
+                    CMain::$title = "из категории " . $data;
                     $sort = "category.link_cat='{$data}' AND";
                     break;
                 default:

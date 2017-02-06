@@ -8,8 +8,9 @@ final class Router
     public static $route;
     public static $requestedUrl = '';
     public static $line = array();
-    private static $logged = false;
     private static $params = array();
+    static $breadcrumbs = array();
+
 
     public static function getRouting()
     {
@@ -31,6 +32,24 @@ final class Router
         return (self::$requestedUrl ?: '/');
     }
 
+    static function breadcrumbs()
+    {
+        self::$breadcrumbs = self::splitUrl($_SERVER['REQUEST_URI']);
+        Temp::$breadcrumbs = "<a href='" . config::$site_adr . "'>" . config::$site_short_name . "</a> » ";
+        $total = count(self::$breadcrumbs) - 1;
+
+        if (!empty(self::$breadcrumbs)) {
+            for ($i = 0; $i <= $total; $i++) {
+                if ($i == $total) {
+                    Temp::$breadcrumbs .= ($total==1) ? self::$breadcrumbs[$i] : self::$route[2];
+                } else {
+                    Temp::$breadcrumbs .= "<a href='".self::$route[0]."'>" . self::$route[2] . "</a> » ";
+                }
+            }
+        } else Temp::$breadcrumbs .= self::$route[2];
+    }
+
+
     public static function dispatch($requestedUrl = null)
     {
         self::getRouting();
@@ -47,8 +66,6 @@ final class Router
         }
 
         foreach (self::$routes as self::$route) {
-            Temp::$result['speedbar'] = "<a href='" . config::$site_adr . "'>" . config::$site_short_name . "</a> » ";
-            Temp::$result['speedbar'] .= (isset(self::$route[2])) ? self::$route[2] : lang::$page_index;
 
             if (strpos(self::$route[0], ':') !== false) {
                 self::$route[0] = str_replace(':any', '(.+)', str_replace(':num', '([0-9]+)', self::$route[0]));
@@ -79,6 +96,7 @@ final class Router
 
     private static function calling($controller, $action, $params)
     {
+        self::breadcrumbs();
         if (is_callable(array("system\\" . $controller, $action))) {
             return call_user_func_array(array("system\\" . $controller, $action), $params);
         } else {

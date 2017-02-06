@@ -71,8 +71,8 @@ class CUser
     static function profileUser($id = null)
     {
         $getIDUser = ($id == "") ? $id = User::isUser('username') : $getIDUser = $id;
-        $user = Mysql::squery("SELECT * FROM users WHERE username='{$getIDUser}'");
-        CMain::$title = "Пользователь " . $user['username'];
+        $user = Mysql::squery("SELECT * FROM users WHERE username='".Mysql::safesql($getIDUser)."'");
+        CMain::$title = $user['username'];
         Temp::load("userinfo");
         Temp::set('{username}', $user['username']);
         Temp::set('{photo}', User::photoUser($user['id']));

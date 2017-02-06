@@ -8,8 +8,9 @@ class Temp
     static $copy_template = NULL;
     static $data = array();
     static $block_data = array();
-    static $result = array('content' => '', 'info' => '', 'speedbar' => "", 'title' => "", 'reply' => "");
+    static $result = array('content' => '', 'info' => '', 'breadcrumbs' => "", 'title' => "", 'reply' => "");
     static $template_parse_time = 0;
+    static $breadcrumbs = "";
 
     public static function set($name, $var)
     {
@@ -36,6 +37,7 @@ class Temp
         self::$template = file_get_contents(self::$dir . DIRECTORY_SEPARATOR . $tpl_name . ".tpl");
         self::$template = str_replace('{skin}', "/templates/" . config::$site_skin, self::$template);
         self::$template = str_replace('{site_adr}', config::$site_adr, self::$template);
+        self::$template = str_replace('{breadcrumbs}', self::$breadcrumbs, self::$template);
 //        if (stristr(self::$template, "{include file=")) {
 //            self::$template = preg_replace_callback("#\\{include file=['\"](.+?)['\"]\\}#ies", array("self", 'sub_load_template'), self::$template);
 //        }

@@ -3,30 +3,12 @@ namespace system;
 
 class CForum
 {
-    static $speedBar = array();
-
     static function tempForum()
     {
-        self::speedBar();
         Temp::load('forum');
         Temp::set('{forum}', Temp::$result['forum']);
         Temp::compile('content');
         Temp::clear();
-    }
-
-    static function speedBar(){
-        //if (!empty(self::$speedBar) or is_array(self::$speedBar)) {
-            $speedBar1 = "";
-        var_dump(self::$speedBar);
-        foreach (self::$speedBar as $value) {
-                if (isset($value[1])) {
-                    $speedBar1 .= " > " . "<a href='javascript:history.go(-1)'>" . $value[0] . "</a>";
-                } else {
-                    $speedBar1 .= " > " . $value[0];
-                }
-            }
-            Temp::$result['speedbar'] .= $speedBar1;
-        //
     }
 
     static function index()
@@ -81,7 +63,6 @@ class CForum
             Temp::set('{text}', $topic['text_topic']);
             Temp::compile('forum');
             Temp::clear();
-        self::$speedBar = array(array("test","test"),array("test2"));
         self::tempForum();
     }
 

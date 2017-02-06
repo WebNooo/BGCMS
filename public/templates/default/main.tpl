@@ -26,7 +26,7 @@
     <div class="center">
       <div id="speedbar">
         <i class="fa fa-compass"></i>
-{speedbar}
+{breadcrumbs}
       </div>
       <div id="mini-profile">
           {login}
