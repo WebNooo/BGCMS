@@ -1,6 +1,6 @@
 <article class="short-story">
 	<div class="short-left">
-		<h1>Пользователь: {uname} [online]<img src="{skin}/images/online.png" style="vertical-align: middle;" title="Пользователь Онлайн" alt="Пользователь Онлайн" />[/online][offline]<img src="{skin}/images/offline.png" style="vertical-align: middle;" title="Пользователь offline" alt="Пользователь offline" />[/offline]</h1>
+		<h1>Пользователь: {username} [online]<img src="{skin}/images/online.png" style="vertical-align: middle;" title="Пользователь Онлайн" alt="Пользователь Онлайн" />[/online][offline]<img src="{skin}/images/offline.png" style="vertical-align: middle;" title="Пользователь offline" alt="Пользователь offline" />[/offline]</h1>
 	</div><br>
 	<div class="basecont"><div class="dpad">
 			<div class="userinfo">

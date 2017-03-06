@@ -11,7 +11,7 @@ class CPost
     static function index($page = "")
     {
         self::$pages = self::pages($page);
-        $posts = Mysql::query("SELECT posts.*, users.*, category.* FROM posts, users, category WHERE users.id = posts.author AND posts.category=category.id_cat AND posts.publish=1 ORDER BY posts.fixed desc, posts.add_date DESC LIMIT " . self::$pages['start'] . "," . config::$post_on_page);
+        $posts = Mysql::query("SELECT posts.*, users.*, category.* FROM posts, users, category WHERE users.id = posts.author AND posts.category=category.id_cat AND posts.publish=1 ORDER BY posts.fixed DESC, posts.add_date DESC LIMIT " . self::$pages['start'] . "," . config::$post_on_page);
         if (Mysql::num() > 0) {
             self::$pagesUrl = config::$site_adr . "post/page/";
             self::shortGenTemp($posts);
@@ -128,7 +128,7 @@ class CPost
 
     }
 
-    static function shortGenTemp($posts)
+    static function shortGenTemp($posts, $search = false)
     {
         if (config::$post_navigate == "top" or config::$post_navigate == "top_bottom") self::pagesTemp(self::$pages['count'], self::$pages['total']);
         foreach ($posts as $post) {
@@ -149,8 +149,21 @@ class CPost
             Temp::compile('content');
             Temp::clear();
         }
-        if (config::$post_navigate == "bottom" or config::$post_navigate == "top_bottom") self::pagesTemp(self::$pages['count'], self::$pages['total']);
+        if ($search) {
+            echo Temp::$result['content'];
+        } else {
+            if (config::$post_navigate == "bottom" or config::$post_navigate == "top_bottom") self::pagesTemp(self::$pages['count'], self::$pages['total']);
+        }
+    }
 
+    static function search($search, $js = false)
+    {
+        $posts = Mysql::query("SELECT posts.*, users.*, category.* FROM posts, users, category WHERE posts.title LIKE '%$search%' AND users.id = posts.author AND posts.category=category.id_cat AND posts.publish=1 ORDER BY posts.fixed desc, posts.add_date DESC");
+
+        if (Mysql::num() > 0)
+            self::shortGenTemp($posts, $js);
+        else
+            echo Parse::$inform['info'] = "По вашему запросу новостей не найдено!";
     }
 
 }

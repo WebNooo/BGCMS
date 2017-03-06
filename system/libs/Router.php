@@ -32,23 +32,48 @@ final class Router
         return (self::$requestedUrl ?: '/');
     }
 
-    static function breadcrumbs()
-    {
-        self::$breadcrumbs = self::splitUrl($_SERVER['REQUEST_URI']);
-        Temp::$breadcrumbs = "<a href='" . config::$site_adr . "'>" . config::$site_short_name . "</a> » ";
-        $total = count(self::$breadcrumbs) - 1;
+//    static function breadcrumbs()
+//    {
+////        self::$breadcrumbs = self::splitUrl($_SERVER['REQUEST_URI']);
+////        echo  $_SERVER['REQUEST_URI'];
+////        Temp::$breadcrumbs = "<a href='" . config::$site_adr . "'>" . config::$site_short_name . "</a> » ";
+////        $total = count(self::$breadcrumbs) - 1;
+////
+////        if (!empty(self::$breadcrumbs)) {
+////            for ($i = 0; $i <= $total; $i++) {
+////                if ($i == $total) {
+////                    Temp::$breadcrumbs .= ($total==1) ? self::$breadcrumbs[$i] : self::$route[2];
+////                } else {
+////                    Temp::$breadcrumbs .= "<a href='".self::$route[0]."'>" . self::$route[2] . "</a> » ";
+////                }
+////            }
+////        } else Temp::$breadcrumbs .= self::$route[2];
+//
+//        $crumbs = explode("/",$_SERVER["REQUEST_URI"]);
+//        foreach($crumbs as $crumb){
+//            Temp::$breadcrumbs= ucfirst(str_replace(array(".html","_"),array(""," "),$crumb) . ' ');
+//        }
+//    }
 
-        if (!empty(self::$breadcrumbs)) {
-            for ($i = 0; $i <= $total; $i++) {
-                if ($i == $total) {
-                    Temp::$breadcrumbs .= ($total==1) ? self::$breadcrumbs[$i] : self::$route[2];
-                } else {
-                    Temp::$breadcrumbs .= "<a href='".self::$route[0]."'>" . self::$route[2] . "</a> » ";
-                }
-            }
-        } else Temp::$breadcrumbs .= self::$route[2];
+    static function breadcrumbs($separator = ' &raquo; ', $home = 'Home') {
+        $path = array_filter(explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)));
+        $base = ($_SERVER['HTTPS'] ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
+        $breadcrumbs = Array("<a href=\"$base\">$home</a>");
+        $last = 1;
+        $count = count($path);
+        foreach ($path AS $x => $crumb) {
+            $title = ucwords(str_replace(Array('.html', '_'), Array('', ' '), $crumb));
+            if ($count != $last)
+                $breadcrumbs[] = "<a href=\"$base$crumb\">$title</a>";
+            else
+                $breadcrumbs[] = $title;
+
+            $last++;
+        }
+
+        // Build our temporary array (pieces of bread) into one big string :)
+        Temp::$breadcrumbs = implode($separator, $breadcrumbs);
     }
-
 
     public static function dispatch($requestedUrl = null)
     {

@@ -71,13 +71,29 @@ class CUser
     static function profileUser($id = null)
     {
         $getIDUser = ($id == "") ? $id = User::isUser('username') : $getIDUser = $id;
-        $user = Mysql::squery("SELECT * FROM users WHERE username='".Mysql::safesql($getIDUser)."'");
-        CMain::$title = $user['username'];
-        Temp::load("userinfo");
-        Temp::set('{username}', $user['username']);
-        Temp::set('{photo}', User::photoUser($user['id']));
-        Temp::compile('content');
-        Temp::clear();
+        Mysql::query("SELECT * FROM users WHERE username='" . Mysql::safesql($getIDUser) . "'");
+        if (Mysql::num() > 0) {
+            $user = Mysql::fetch();
+            CMain::$title = $user['username'];
+            Temp::load("userinfo");
+            Temp::set('{username}', $user['username']);
+            Temp::set('{fullname}', $user['fullname']);
+            if ($user['online'] > (time() - 180)) {
+                Temp::set('[online]', "");
+                Temp::set('[/online]', "");
+                Temp::set_block("'\\[offline\\](.*?)\\[/offline\\]'si", "");
+
+            } else {
+                Temp::set('[offline]', "");
+                Temp::set('[/offline]', "");
+                Temp::set_block("'\\[online\\](.*?)\\[/online\\]'si", "");
+            }
+            Temp::set('{photo}', User::photoUser($user['id']));
+            Temp::compile('content');
+            Temp::clear();
+        }else{
+            Parse::$inform['info'] = "Пользователь не найден!";
+        }
     }
 
     static function updateUser()

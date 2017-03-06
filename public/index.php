@@ -8,3 +8,5 @@ define('SYS', dirname(dirname(__FILE__))."/system");
 require_once SYS ."/core.php";
 \system\CMain::main();
 
+//\system\Mysql::update("users", "fullname::Jony Kook", "username='20167'");
+

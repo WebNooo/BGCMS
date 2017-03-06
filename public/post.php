@@ -1,5 +1,4 @@
 <?php
-session_start();
 define("PUB", dirname(__FILE__));
 define("SYS", dirname(dirname(__FILE__)) . "/system");
 
@@ -30,6 +29,10 @@ if (isset($_GET['post'])) {
 
         case "addcomment":
             \system\CComments::add($_POST);
+            break;
+
+        case "search":
+            system\CPost::search($_POST['search'], $_POST['js']);
             break;
     }
 } else {

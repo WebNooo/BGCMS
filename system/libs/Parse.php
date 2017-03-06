@@ -70,6 +70,21 @@ class Parse
         return $code;
     }
 
+    static function sklon($number, $one, $two, $five) {
+        if (($number - $number % 10) % 100 != 10) {
+            if ($number % 10 == 1) {
+                $result = $one;
+            } elseif ($number % 10 >= 2 && $number % 10 <= 4) {
+                $result = $two;
+            } else {
+                $result = $five;
+            }
+        } else {
+            $result = $five;
+        }
+        return $result;
+    }
+
     public static function dateTime($time, $birthday = false)
     {
         if (config::$site_set_timezone == "yes") {
@@ -79,17 +94,17 @@ class Parse
         $date = date('d.m.Y', $time);
         $date_time = date('H:i', $time);
         $date_exp = explode('.', $date);
-
+        $min = round((time() - $time)/60);
+        $sec = round((time() - $time));
         foreach (lang::$month as $key => $value) {
             if ($key == intval($date_exp[1])) $month_name = $value;
         }
         if ($birthday == true)
             return $date_exp[0] . ' ' . $month_name . ' ' . $date_exp[2];
         else {
-            if ($date_time == date('H:i', time()))
-                return "Несколько секунд назад";
-            elseif ($date_time == date('H:i', strtotime('-1 minute')))
-                return '1 минуту назад ';
+            if ($sec < 55)
+                return "$sec ".self::sklon($sec, 'секунду','секунды','секунд')." назад";
+            elseif( $min < 55 ) return "$min ".self::sklon($min, 'минуту','минуты','минут')." назад";
             elseif ($date == date('d.m.Y', time()))
                 return 'сегодня в ' . $date_time;
             elseif ($date == date('d.m.Y', strtotime('-1 day')))
@@ -132,7 +147,6 @@ class Parse
                 array('type' => $type, 'message' => $message)
             );
         }
-
 
     }
 

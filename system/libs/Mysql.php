@@ -73,6 +73,28 @@ class Mysql
         }
     }
 
+    public static function update($table, $data, $where=""){
+        $query = "";
+        $data = explode(';;', $data);
+        foreach ($data as $value){
+            $value = explode('::', $value);
+            $query .= "$value[0]='$value[1]',";
+        }
+        if (!empty($where)){
+            $where = "WHERE $where";
+        }
+        self::query("UPDATE $table SET ".trim($query, ',')." $where");
+    }
+
+    public static function insert($table, $array){
+        $col = "";$val = "";
+        foreach ($array as $value => $key){
+            $col .= "$key,";
+            $val .= "'$value',";
+        }
+        self::query("INSERT $table (".trim($col, ',').") VALUES (".trim($val, ',').")");
+    }
+
     public static function free($value = "")
     {
         if (empty($value)) $value = self::$queryID;

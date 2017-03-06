@@ -279,6 +279,19 @@ function acceptRules(){
 }
 
 $(document).ready(function () {
+    $("input[name=SSearch]").on("keyup", function () {
+        var value = $("input[name=SSearch]").val();
+        window.history.pushState("", "", "/search/"+value);
+        $.ajax({
+            url: site + "/post.php?post=search",
+            type: "POST",
+            data: {search: value, js:true},
+            success: function (data) {
+                $("#SContent").html(data);
+            }
+        });
+    });
+
     $("button[name=authStart]").on('click', function () {
         $.ajax({
             url: site + "/post.php?post=post",
