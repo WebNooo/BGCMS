@@ -53,7 +53,7 @@ if (isset($_GET['post'])) {
             function __autoload($class_name)
             {
                 $class_name = str_replace("system\\", "", $class_name);
-                $file = sprintf('%s/libs/%s.php', SYS, $class_name);
+                $file = sprintf('%s/libraries/%s.php', SYS, $class_name);
                 if (is_file($file)) require_once $file;
                 $class_name = str_replace("admin\\", "", $class_name);
                 $file = sprintf('%s/admin/controllers/%s.php', SYS, $class_name);

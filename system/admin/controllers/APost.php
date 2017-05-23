@@ -142,9 +142,7 @@ class APost
     {
         $data['date'] = (empty($data['date'])) ? time() : strtotime($data['date']);
 
-
-
-        if (Mysql::query("UPDATE posts SET title='{$data['title']}', add_date='{$data['date']}', sort_date='".date("Y-m-d", $data['date'])."', short='{$data['short']}', `full`='{$data['full']}', fixed={$data['fixed']}, publish={$data['publish']}, category='{$data['category']}' WHERE id_post='{$data['id']}'")) {
+        if (Mysql::query("UPDATE posts SET title='".addslashes($data['title'])."', add_date='{$data['date']}', sort_date='".date("Y-m-d", $data['date'])."', short='".addslashes($data['short'])."', `full`='".addslashes($data['full'])."', fixed={$data['fixed']}, publish={$data['publish']}, category='{$data['category']}' WHERE id_post='{$data['id']}'")) {
             AMain::jsi('success', lang::$post_add);
         } else {
             AMain::jsi('danger', lang::$post_add_error);

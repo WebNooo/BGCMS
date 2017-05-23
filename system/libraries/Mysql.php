@@ -84,7 +84,11 @@ class Mysql
         if (!empty($where)) {
             $where = "WHERE $where";
         }
-        self::query("UPDATE $table SET " . trim($query, ',') . " $where");
+
+        if(self::query("UPDATE $table SET " . trim($query, ',') . " $where"))
+            return true;
+        else
+            return false;
     }
 
     public static function insert($table, $array)
