@@ -1,0 +1,9 @@
+//insert mysql row
+
+        $array = array(
+            array('title', 'add_date', 'sort_date', 'short', 'full', 'fixed', 'publish', 'category'),
+            array($data['title'], $data['date'], date("Y-m-d", $data['date']), $data['short'], $data['full'],$data['fixed'], $data['publish'], $data['category'])
+        );
+            Mysql::insert('posts', $array);
+
+//update mysql table
