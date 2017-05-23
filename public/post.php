@@ -9,14 +9,14 @@ if (isset($_GET['post'])) {
     switch ($_GET['post']) {
         case "post":
             if (isset($_POST['c']) && isset($_POST['f']) && isset($_POST['d']) && !empty($_POST['c']) && !empty($_POST['f']) && !empty($_POST['d'])) {
-                $recv = system\CMain::post($_POST['c'], $_POST['f'], $_POST['d']);
+                $recv = system\System::post($_POST['c'], $_POST['f'], $_POST['d']);
                 if ($recv == 1) {
                     echo 1;
                 } else {
                     echo $recv;
                 }
             } else
-                system\CMain::exception();
+                system\System::exception();
             break;
 
         case "adduser":
@@ -31,6 +31,10 @@ if (isset($_GET['post'])) {
             \system\CComments::add($_POST);
             break;
 
+        case "comments":
+            \system\CComments::comments($_GET['id'], true);
+            break;
+
         case "search":
             system\CPost::search($_POST['search'], $_POST['js']);
             break;
@@ -38,47 +42,54 @@ if (isset($_GET['post'])) {
 } else {
     if (isset($_GET['admin'])) {
 
-        require_once SYS . "/data/config.php";
-        require_once SYS . "/data/dbconfig.php";
-        require_once SYS . "/data/lang/" . \system\config::$site_lang . "/admin.php";
+        session_start();
 
-        function __autoload($class_name)
-        {
-            $class_name = str_replace("system\\", "", $class_name);
-            $file = sprintf('%s/libs/%s.php', SYS, $class_name);
-            if (is_file($file)) require_once $file;
-            $class_name = str_replace("admin\\", "", $class_name);
-            $file = sprintf('%s/admin/controllers/%s.php', SYS, $class_name);
-            if (is_file($file)) require_once $file;
-        }
+        if (isset($_SESSION['user']) AND $_SESSION['user']['is_admin']==1) {
 
-        switch ($_GET['admin']) {
-            case "getUser":
-                admin\AUsers::getUsers($_POST['page'], $_POST['search'], $_POST['online']);
-                break;
+            require_once SYS . "/data/config.php";
+            require_once SYS . "/data/dbconfig.php";
+            require_once SYS . "/data/lang/" . \system\config::$site_lang . "/admin.php";
 
-            case "save":
-                admin\ASettings::save($_POST['save']);
-                break;
+            function __autoload($class_name)
+            {
+                $class_name = str_replace("system\\", "", $class_name);
+                $file = sprintf('%s/libs/%s.php', SYS, $class_name);
+                if (is_file($file)) require_once $file;
+                $class_name = str_replace("admin\\", "", $class_name);
+                $file = sprintf('%s/admin/controllers/%s.php', SYS, $class_name);
+                if (is_file($file)) require_once $file;
+            }
 
-            case "state_post":
-                admin\APost::updateState($_POST['id'], $_POST['state']);
-                break;
+            switch ($_GET['admin']) {
+                case "getUser":
+                    admin\AUsers::getUsers($_POST['page'], $_POST['search'], $_POST['online']);
+                    break;
 
-            case "add_post":
-                admin\APost::addPost($_POST);
-                break;
+                case "save":
+                    admin\ASettings::save($_POST['save']);
+                    break;
 
-            case "update_post":
-                admin\APost::updatePost($_POST);
-                break;
+                case "state_post":
+                    admin\APost::updateState($_POST['id'], $_POST['state']);
+                    break;
 
-            case "delete_post":
-                admin\APost::delete($_GET);
-                break;
+                case "add_post":
+                    admin\APost::addPost($_POST);
+                    break;
 
-            case "save_routing":
-                admin\ARouting::saveRouting($_POST);
+                case "update_post":
+                    admin\APost::updatePost($_POST);
+                    break;
+
+                case "delete_post":
+                    admin\APost::delete($_GET['id']);
+                    break;
+
+                case "save_routing":
+                    admin\ARouting::saveRouting($_POST);
+            }
+        }else{
+            echo "{\"type\":\"danger\", \"text\":\"Your IP: ".$_SERVER['REMOTE_ADDR']." add to ban list!\"}";
         }
     }
 }

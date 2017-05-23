@@ -229,7 +229,7 @@ function notify(json) {
 
     $.notify({
         icon: 'glyphicon glyphicon-warning-sign',
-        title: title+"!",
+        title: title + "!",
         message: data.message
     }, {
         // settings
@@ -272,20 +272,24 @@ function notify(json) {
     });
 }
 
-function acceptRules(){
-    $.get(site +"/post.php?post=accept_rules", function (data) {
+function acceptRules() {
+    $.get(site + "/post.php?post=accept_rules", function (data) {
         location.reload();
     });
+}
+
+function commentsList(id, page) {
+    $.get(site + "/post.php?post=comments&id=" + id,function(data) { $("#SComments").html(data);});
 }
 
 $(document).ready(function () {
     $("input[name=SSearch]").on("keyup", function () {
         var value = $("input[name=SSearch]").val();
-        window.history.pushState("", "", "/search/"+value);
+        window.history.pushState("", "", "/search/" + value);
         $.ajax({
             url: site + "/post.php?post=search",
             type: "POST",
-            data: {search: value, js:true},
+            data: {search: value, js: true},
             success: function (data) {
                 $("#SContent").html(data);
             }
@@ -338,12 +342,13 @@ $(document).ready(function () {
         url = url[1].split('-');
         $.ajax({
             url: site + "/post.php?post=addcomment",
-            type:"POST",
-            data:{
+            type: "POST",
+            data: {
                 "post": url[0],
                 "text": getTextarea('comments')
-            },success: function (data) {
-                    notify(data);
+            }, success: function (data) {
+                commentsList(url[0]);
+                notify(data);
             }
         });
     });

@@ -9048,6 +9048,11 @@ p {
     overflow: hidden
 }
 
+.flot-chart-edge, .messages__user > div, .widget-past-days__info_2, .widget-weather__info_2 {
+    overflow: hidden;
+    text-align: right;
+}
+
 .ie9 #notifications:not(.toggled) {
     display: none
 }

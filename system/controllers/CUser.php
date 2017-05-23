@@ -29,12 +29,12 @@ class CUser
             if (isset($_COOKIE['rules']) == 1) {
                 Temp::load("registration");
                 if (isset($_COOKIE['add_user']) != "success") {
-                    CMain::$title = "Регистрация";
+                    System::$title = "Регистрация";
                     Temp::set('[registration]', "");
                     Temp::set('[/registration]', "");
                     Temp::set_block("'\\[registered\\](.*?)\\[/registered\\]'si", "");
                 } else {
-                    CMain::$title = "Успешная регистрация";
+                    System::$title = "Успешная регистрация";
                     Temp::set('[registered]', "");
                     Temp::set('[/registered]', "");
                     Temp::set_block("'\\[registration\\](.*?)\\[/registration\\]'si", "");
@@ -43,7 +43,7 @@ class CUser
                 Temp::clear();
                 setcookie("add_user", "", 0);
             } else {
-                CMain::$title = "Правила";
+                System::$title = "Правила";
                 $page = Mysql::squery("SELECT * FROM static WHERE `name`='rules'");
                 Temp::$result['speedbar'] .= " » Правила";
                 Temp::load("static");
@@ -74,7 +74,7 @@ class CUser
         Mysql::query("SELECT * FROM users WHERE username='" . Mysql::safesql($getIDUser) . "'");
         if (Mysql::num() > 0) {
             $user = Mysql::fetch();
-            CMain::$title = $user['username'];
+            System::$title = $user['username'];
             Temp::load("userinfo");
             Temp::set('{username}', $user['username']);
             Temp::set('{fullname}', $user['fullname']);
@@ -116,7 +116,7 @@ class CUser
 
     static function resetUser()
     {
-        CMain::$title = "Восстановление пароля";
+        System::$title = "Восстановление пароля";
         Temp::load("lostpassword");
         Temp::compile('content');
         Temp::clear();

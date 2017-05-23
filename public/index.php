@@ -5,8 +5,7 @@ error_reporting(E_ALL);
 define('PUB', dirname(__FILE__));
 define('SYS', dirname(dirname(__FILE__))."/system");
 
-require_once SYS ."/core.php";
-\system\CMain::main();
-
-//\system\Mysql::update("users", "fullname::Jony Kook", "username='20167'");
-
+require_once SYS ."/init.php";
+system\Router::dispatch();
+system\System::include_mods();
+system\System::run();

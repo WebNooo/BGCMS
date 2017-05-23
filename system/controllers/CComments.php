@@ -15,7 +15,8 @@ class CComments
     {
         if (Parse::isValid($data['post'], 'int') or !empty($data['post'])) {
             if (Parse::isValid($data['text']) or !empty($data['text'])) {
-                Mysql::query("INSERT INTO comments (id_p, id_author, text_comment, date_comment) VALUES ('".Mysql::safesql($data['post'])."', '".User::isUser('id')."', '".Mysql::safesql($data['text'])."','".time()."')");
+                Mysql::query("INSERT INTO comments (id_p, id_author, text_comment, date_comment) VALUES ('" . Mysql::safesql($data['post']) . "', '" . User::isUser('id') . "', '" . Mysql::safesql($data['text']) . "','" . time() . "')");
+                Parse::jsi("success", "add comment");
             } else Parse::jsi('danger', "error text");
         } else Parse::jsi('danger', "error id");
 
@@ -31,7 +32,7 @@ class CComments
 
     }
 
-    static function comments($id)
+    static function comments($id, $js = false, $page = 0)
     {
         $comments = Mysql::query("SELECT comments.*, users.* FROM comments,users WHERE comments.id_author=users.id AND comments.id_p='$id'");
         $count = Mysql::num($comments);
@@ -63,9 +64,11 @@ class CComments
                 Temp::compile('comments');
                 Temp::clear();
             }
+            if ($js) echo Temp::$result['comments'];
+
         } else {
             //Temp::$result['comments'] = "К данной статье комментариев не найдено";
-            CMain::info('Информация', "К данной статье комментариев не найдено", "comments");
+            System::info('Информация', "К данной статье комментариев не найдено", "comments");
         }
     }
 

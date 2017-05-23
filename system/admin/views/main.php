@@ -1,20 +1,24 @@
-
 <div id="content__grid" data-columns>
     <div class="card widget-analytic">
         <div class="card__header">
-            <h2>Пользователи <small>Кол-во пользователей сайта</small></h2>
+            <h2>Пользователи
+                <small>Кол-во пользователей сайта</small>
+            </h2>
         </div>
         <div class="card__body">
             <div class="widget-analytic__info">
                 <i class="zmdi zmdi-account-circle"></i>
-                <h2><?php echo \system\Mysql::num(\system\Mysql::query("SELECT * FROM users")); ?> <!--<small style="color: green;">+40</small>--></h2>
+                <h2><?php echo \system\Mysql::num(\system\Mysql::query("SELECT * FROM users")); ?>
+                    <!--<small style="color: green;">+40</small>--></h2>
             </div>
         </div>
     </div>
 
     <div class="card widget-analytic">
         <div class="card__header">
-            <h2>Website Traffics <small>Nullam Adipiscing Pellentesque</small></h2>
+            <h2>Website Traffics
+                <small>Nullam Adipiscing Pellentesque</small>
+            </h2>
         </div>
         <div class="card__body">
             <div class="widget-analytic__info">
@@ -26,7 +30,9 @@
 
     <div class="card widget-analytic">
         <div class="card__header">
-            <h2>Total Sales <small>Purus Malesuada Consectetur</small></h2>
+            <h2>Total Sales
+                <small>Purus Malesuada Consectetur</small>
+            </h2>
         </div>
         <div class="card__body">
             <div class="widget-analytic__info">
@@ -39,7 +45,9 @@
 
     <div class="card">
         <div class="card__header">
-            <h2>Комментарии <small>Список последних комментариев</small></h2>
+            <h2>Комментарии
+                <small>Список последних комментариев</small>
+            </h2>
         </div>
 
         <div class="list-group">
@@ -50,7 +58,9 @@
 
                 <div class="media-body">
                     <div class="list-group__heading">David Villa Jacobs</div>
-                    <small class="list-group__text">Sorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mattis lobortis sapien non posuere</small>
+                    <small class="list-group__text">Sorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                        mattis lobortis sapien non posuere
+                    </small>
                 </div>
             </a>
 
@@ -60,7 +70,9 @@
                 </div>
                 <div class="media-body">
                     <div class="list-group__heading">Candice Barnes</div>
-                    <small class="list-group__text">Quisque non tortor ultricies, posuere elit id, lacinia purus curabitur.</small>
+                    <small class="list-group__text">Quisque non tortor ultricies, posuere elit id, lacinia purus
+                        curabitur.
+                    </small>
                 </div>
             </a>
 
@@ -70,7 +82,9 @@
                 </div>
                 <div class="media-body">
                     <div class="list-group__heading">Jeannette Lawson</div>
-                    <small class="list-group__text">Donec congue tempus ligula, varius hendrerit mi hendrerit sit amet. Duis ac quam sit amet leo feugiat iaculis</small>
+                    <small class="list-group__text">Donec congue tempus ligula, varius hendrerit mi hendrerit sit amet.
+                        Duis ac quam sit amet leo feugiat iaculis
+                    </small>
                 </div>
             </a>
 
@@ -80,7 +94,9 @@
                 </div>
                 <div class="media-body">
                     <div class="list-group__heading">Darla Mckinney</div>
-                    <small class="list-group__text">Duis tincidunt augue nec sem dignissim scelerisque. Vestibulum rhoncus sapien sed nulla aliquam lacinia</small>
+                    <small class="list-group__text">Duis tincidunt augue nec sem dignissim scelerisque. Vestibulum
+                        rhoncus sapien sed nulla aliquam lacinia
+                    </small>
                 </div>
             </a>
 
@@ -90,7 +106,9 @@
                 </div>
                 <div class="media-body">
                     <div class="list-group__heading">Rudolph Perez</div>
-                    <small class="list-group__text">Phasellus a ullamcorper lectus, sit amet viverra quam. In luctus tortor vel nulla pharetra bibendum</small>
+                    <small class="list-group__text">Phasellus a ullamcorper lectus, sit amet viverra quam. In luctus
+                        tortor vel nulla pharetra bibendum
+                    </small>
                 </div>
             </a>
 
@@ -102,49 +120,22 @@
 
     <div class="card widget-past-days">
         <div class="card__header">
-            <h2>Статистика <small>Информация за последний месяц</small></h2>
+            <h2>Статистика
+                <small>Информация за все время</small>
+            </h2>
         </div>
         <div class="list-group list-group--striped">
             <div class="list-group-item">
-                <div class="widget-past-days__chart hidden-sm">
-                    <div class="chart-sparkline-bar">6,9,5,6,3,7,5,4,6,5,6,4,2,5,8,2,6,9</div>
-                </div>
-
-                <div class="widget-past-days__info">
-                    <small>Просмотр страниц</small>
-                    <h3>47,896,536</h3>
-                </div>
-            </div>
-
-            <div class="list-group-item">
-                <div class="widget-past-days__chart hidden-sm">
-                    <div class="chart-sparkline-bar">5,7,2,5,2,8,6,7,6,5,3,1,9,3,5,8,2,4</div>
-                </div>
-
                 <div class="widget-past-days__info">
                     <small>Посещение сайта</small>
-                    <h3>24,456,799</h3>
+                    <h3><?php echo \system\Mysql::num(\system\Mysql::query("SELECT * FROM visitors WHERE v_date='" . mktime(0, 0, 0, date("d"), date("m"), date("Y")) . "'")); ?></h3>
                 </div>
             </div>
 
             <div class="list-group-item">
-                <div class="widget-past-days__chart hidden-sm">
-                    <div class="chart-sparkline-bar">5,7,2,5,2,8,6,7,6,5,3,1,9,3,5,8,2,4</div>
-                </div>
-
                 <div class="widget-past-days__info">
                     <small>Комментарии</small>
                     <h3>13,965</h3>
-                </div>
-            </div>
-
-            <div class="list-group-item">
-                <div class="widget-past-days__chart hidden-sm">
-                    <div class="chart-sparkline-bar">0,9,1,3,5,6,7,6,8,2,5,2,7,5,6,7,6,8</div>
-                </div>
-                <div class="widget-past-days__info">
-                    <small>Вернулись</small>
-                    <h3>198</h3>
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@ class CStatic
         Mysql::query("SELECT * FROM static WHERE `name`='".Mysql::safesql($page)."'");
         if (Mysql::num() > 0) {
             $pages = Mysql::assoc();
-            CMain::$title = $pages['description'];
+            System::$title = $pages['description'];
 
             //Temp::$result['speedbar'] .= " » " . $pages['description'];
             Temp::load("static");

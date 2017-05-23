@@ -20,11 +20,11 @@ class CPost
         }
     }
 
-    static function pages($count, $where = "", $table = "")
+    static function pages($count,$col="*", $where = "", $table = "")
     {
         if (empty($table)) $table = "posts";
         if (!empty($where)) $w = $where; else $w = "publish=1";
-        Mysql::query("SELECT *  FROM {$table} WHERE {$w}");
+        Mysql::query("SELECT $col FROM {$table} WHERE {$w}");
         $e = Mysql::num();
         $quantity = ($e == 0) ? 1 : $e;
         Mysql::clear();
@@ -78,7 +78,7 @@ class CPost
                     $post = Mysql::assoc();
                     CComments::addComments();
                     CComments::comments($id);
-                    CMain::$title = $post['title'];
+                    System::$title = $post['title'];
                     //Temp::$result['speedbar'] .= " » " . $post['title'];
 
                     Mysql::query("SELECT * FROM comments WHERE id_p='{$post['id_post']}'");
@@ -102,26 +102,27 @@ class CPost
         } else Parse::$inform['danger'] = "Не возможно найти новость с таким ID";
     }
 
-    static function sortPost($type, $data, $page = 0)
+    static function sortPost($type, $data, $page = "")
     {
         if (Parse::isValid($type) && Parse::isValid($data)) {
             switch ($type) {
                 case "date":
-                    CMain::$title = "по дате " . $data;
-                    $sort = "posts.sort_date='{$data}' AND";
+                    System::$title = "по дате " . $data;
+                    $sort = "posts.sort_date='{$data}' AND posts.category=category.id_cat AND posts.publish=1";
                     break;
                 case "category":
-                    CMain::$title = "из категории " . $data;
-                    $sort = "category.link_cat='{$data}' AND";
+                    System::$title = "из категории " . $data;
+                    $sort = "category.link_cat='{$data}' AND posts.category=category.id_cat AND posts.publish=1";
                     break;
                 default:
                     $sort = "";
             }
 
-            self::$pages = self::pages($page);
-            $posts = Mysql::query("SELECT posts.*, users.*, category.* FROM posts, users, category WHERE {$sort} users.id = posts.author AND posts.category=category.id_cat AND posts.publish=1 ORDER BY posts.fixed desc, posts.add_date DESC LIMIT " . self::$pages['start'] . "," . config::$post_on_page);
+            self::$pages = self::pages($page, "posts.*, category.*", $sort, "posts, category");
+            if (!empty($sort)) $sort.=" AND";
+            $posts = Mysql::query("SELECT posts.*, users.*, category.* FROM posts, users, category WHERE {$sort} users.id = posts.author AND posts.publish=1 ORDER BY posts.fixed desc, posts.add_date DESC LIMIT " . self::$pages['start'] . "," . config::$post_on_page);
             if (Mysql::num() > 0) {
-                self::$pagesUrl = config::$site_adr . "sort/" . $type . "/" . $data . "/page/";
+                self::$pagesUrl = config::$site_adr . "sort/" . $type . "/" . $data . "/";
                 self::shortGenTemp($posts);
             } else Parse::$inform['info'] = "Новостей на найдено!";
         } else Parse::$inform['info'] = "Не думаю что подмена параметров это хорошая идея!";
