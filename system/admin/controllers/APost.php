@@ -141,6 +141,9 @@ class APost
     static function updatePost($data)
     {
         $data['date'] = (empty($data['date'])) ? time() : strtotime($data['date']);
+
+
+
         if (Mysql::query("UPDATE posts SET title='{$data['title']}', add_date='{$data['date']}', sort_date='".date("Y-m-d", $data['date'])."', short='{$data['short']}', `full`='{$data['full']}', fixed={$data['fixed']}, publish={$data['publish']}, category='{$data['category']}' WHERE id_post='{$data['id']}'")) {
             AMain::jsi('success', lang::$post_add);
         } else {
@@ -150,7 +153,10 @@ class APost
 
     static function delete($data)
     {
-        echo $data['id'];
+        if (Mysql::query("DELETE FROM posts WHERE id_post='$data'"))
+            echo "delete post";
+        else
+            echo "not delete post";
     }
 
     static function add()
@@ -230,7 +236,7 @@ class APost
     static function addPost($data)
     {
         $data['date'] = (empty($data['date'])) ? time() : strtotime($data['date']);
-        if (Mysql::query("INSERT INTO posts (title, author, short, `full`, add_date, sort_date, fixed, publish,category) VALUES ('{$data['title']}','" . User::isUser('id') . "','{$data['short']}','{$data['full']}','{$data['date']}','".date("Y-m-d", $data['date'])."',{$data['fixed']},{$data['publish']},'{$data['category']}')")) {
+        if (Mysql::query("INSERT INTO posts (title, author, short, `full`, add_date, sort_date, fixed, publish,category) VALUES ('".Mysql::safesql(htmlspecialchars($data['title']))."','" . User::isUser('id') . "','".Mysql::escape(htmlspecialchars(addslashes($data['short'])))."','".Mysql::escape($data['full'])."','{$data['date']}','".date("Y-m-d", $data['date'])."',{$data['fixed']},{$data['publish']},'{$data['category']}')")) {
             AMain::jsi('success', lang::$post_add);
         } else {
             AMain::jsi('danger', lang::$post_add_error);
