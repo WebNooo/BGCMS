@@ -13,7 +13,6 @@ class CForum
 
     static function index()
     {
-        System::$title = "Форум";
         foreach (Mysql::query('SELECT * FROM forum') as $forum) {
             Temp::$result['forum_sub'] = "";
             foreach (Mysql::query("SELECT * FROM forum_sub WHERE forum_id='{$forum['id_forum']}'") as $sub) {

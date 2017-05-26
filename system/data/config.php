@@ -26,6 +26,8 @@ class config
 
     static $site_lang = "ru";
 
+    static $site_separator = " &raquo; ";
+
     static $site_set_timezone = "no";
 
     static $site_timezone = "Europe/Moscow";

@@ -41,6 +41,7 @@ class Parse
     {
         if (!empty(self::$inform)) {
             foreach (self::$inform as $key => $message) {
+                //System::$title = lang::$imsg[$key];
                 Temp::$result['info'] = "<div id='msg_{$key}'><b>" . lang::$imsg[$key] . ": </b>{$message}</div>";
             }
         }

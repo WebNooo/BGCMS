@@ -109,20 +109,20 @@ class System{
 
 
 
-    static function genTitle()
-    {
-        if (!empty(Router::$route[2])) {
-            if (!empty(self::$title)) $title = " :: " . self::$title; else $title = "";
-            return config::$site_title . " :: " . Router::$route[2] . $title;
-        } else {
-            return config::$site_title;
-        }
-    }
+//    static function genTitle()
+//    {
+//        if (!empty(Router::$route[2])) {
+//            if (!empty(self::$title)) $title = " :: " . self::$title; else $title = "";
+//            return config::$site_title . " :: " . Router::$route[2] . $title;
+//        } else {
+//            return config::$site_title;
+//        }
+//    }
 
     static function headers()
     {
         return "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=" . config::$site_charset . "\" />
-    <title>" . self::genTitle() . "</title>
+    <title>" . self::$title . "</title>
     <meta name=\"description\" content=\"" . config::$site_description . "\" />
     <meta name=\"keywords\" content=\"" . config::$site_keywords . "\" />
     <meta name=\"generator\" content=\"BLackGame (https://BGSrv.ru)\" />
@@ -148,7 +148,7 @@ class System{
         echo "
         <html>
             <head>
-                <title>" . config::$site_title . " :: " . lang::$error_1 . "</title>
+                <title>".lang::$error_1 . "</title>
             </head>
             <body>
             " . lang::$error_2 . "

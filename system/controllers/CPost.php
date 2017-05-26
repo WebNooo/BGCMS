@@ -78,7 +78,7 @@ class CPost
                     $post = Mysql::assoc();
                     CComments::addComments();
                     CComments::comments($id);
-                    System::$title = $post['title'];
+                    //System::$title = $post['title'];
                     //Temp::$result['speedbar'] .= " » " . $post['title'];
 
                     Mysql::query("SELECT * FROM comments WHERE id_p='{$post['id_post']}'");
