@@ -56,4 +56,6 @@ class config
 
     static $comment_max_page = "10";
 
+    static $email_title = "BlackGame";
+    static $email_from_adr = "admin@bgsrv.ru";
 }

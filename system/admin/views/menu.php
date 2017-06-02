@@ -11,6 +11,7 @@ $array = array (
     'static_page' => array ( \admin\lang::$menu_static_page, "zmdi zmdi-pages" ),
     'edit_skin' => array(\admin\lang::$menu_temp_edit, "zmdi zmdi-border-color"),
     'routing' => array(\admin\lang::$menu_routing, "zmdi zmdi-router"),
+    'email_tpl' => array(\admin\lang::$menu_email_tpl, "zmdi zmdi-mail"),
 
 );
 

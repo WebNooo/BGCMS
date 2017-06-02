@@ -31,6 +31,7 @@ class ASettings
                                 <li class=\"active\"><a href=\"#tab-main-2\" data-toggle=\"tab\" aria-expanded=\"true\">" . lang::$setting_main . "</a></li>
                                 <li class=\"\"><a href=\"#tab-admin-2\" data-toggle=\"tab\" aria-expanded=\"false\">" . lang::$setting_admin . "</a></li>
                                 <li class=\"\"><a href=\"#tab-user-2\" data-toggle=\"tab\" aria-expanded=\"false\">" . lang::$setting_user . "</a></li>
+                                <li class=\"\"><a href=\"#tab-mail-2\" data-toggle=\"tab\" aria-expanded=\"false\">" . lang::$setting_mail . "</a></li>
                                 <li class=\"\"><a href=\"#tab-news-2\" data-toggle=\"tab\" aria-expanded=\"false\">" . lang::$setting_post . "</a></li>
                                 <li class=\"\"><a href=\"#tab-comments-2\" data-toggle=\"tab\" aria-expanded=\"false\">" . lang::$setting_comments . "</a></li>
                             </ul>
@@ -48,6 +49,7 @@ class ASettings
                 self::select("site_lang", self::getLang()) .
                 self::radio("site_set_timezone") .
                 self::select("site_timezone", timezone::$timezones) .
+                self::input("site_separator") .
                 self::radio("site_offline") .
                 self::text("site_offline_reason") . "
                                 </div>
@@ -64,10 +66,16 @@ class ASettings
                 self::input("user_min_password") .
                 self::input("user_user_one_ip") . "
                                 </div>
+                                
+                                <div class=\"tab-pane\" id=\"tab-mail-2\">
+                                
+                                    " . self::input("email_title") . "
+                                    " . self::input("email_from_adr") . "
+                                </div>
                                     
                                 <div class=\"tab-pane\" id=\"tab-news-2\">
                                     " . self::input("post_on_page") . "
-                                    " . self::select("post_navigate", array('top'=>'С верху','bottom'=>'С низу','top_bottom'=>'Сверху и снизу')) . "
+                                    " . self::select("post_navigate", array('top' => 'С верху', 'bottom' => 'С низу', 'top_bottom' => 'Сверху и снизу')) . "
                                     " . self::radio("post_hide_full_link") . "
                                 </div>
                                     

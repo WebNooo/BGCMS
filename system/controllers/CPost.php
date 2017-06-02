@@ -97,9 +97,9 @@ class CPost
                     Temp::compile('content');
                     Temp::clear();
                     Mysql::query("UPDATE posts SET views=views+1 WHERE id_post='{$id}'");
-                } else Parse::$inform['danger'] = "Новость не найдена, возможно она была удалена";
-            } else Parse::$inform['danger'] = "Не возможно найти новость с таким ID";
-        } else Parse::$inform['danger'] = "Не возможно найти новость с таким ID";
+                } else System::exception();
+            } else System::exception();
+        } else System::exception();
     }
 
     static function sortPost($type, $data, $page = "")
@@ -164,7 +164,7 @@ class CPost
         if (Mysql::num() > 0)
             self::shortGenTemp($posts, $js);
         else
-            echo Parse::$inform['info'] = "По вашему запросу новостей не найдено!";
+            Parse::$inform['info'] = "По вашему запросу новостей не найдено!";
     }
 
 }

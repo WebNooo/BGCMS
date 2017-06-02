@@ -33,6 +33,7 @@ class lang
     static $setting_site_index_mode = "Модуль главной страницы";
     static $setting_site_set_timezone = "Установить кориктеровку времени";
     static $setting_site_timezone = "Временная зона";
+    static $setting_site_separator = "Разделитель заголовка";
     static $setting_error_open_file = "Не возможно открыть или создать файл для записи";
     static $setting_error_write_file = "Ошибка записи в файл";
     static $setting_success_save = "Настройки успешно сохранены";
@@ -46,6 +47,8 @@ class lang
     static $setting_post_hide_full_link = "Скрывать ссылку на полную новость";
     static $setting_post_navigate = "Включить навигацию вверху страницы";
     static $setting_comment_max_page = "Комментариев на странице";
+    static $setting_email_title = "От кого посылать письма";
+    static $setting_email_from_adr = "Email для отправки писем";
 
     static $menu_main_page = "Главная страница";
     static $menu_settings = "Настройки";
@@ -53,6 +56,7 @@ class lang
     static $menu_posts = "Новости";
     static $menu_static_page = "Статические страницы";
     static $menu_routing = "Маршруты";
+    static $menu_email_tpl = "Email шаблоны";
     static $menu_temp_edit = "Редактор шаблона";
     static $menu_list_users = "Список пользователей";
     static $menu_list_group = "Список групп";

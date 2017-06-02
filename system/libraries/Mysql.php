@@ -68,8 +68,9 @@ class Mysql
             self::$queryNUM++;
             return self::$queryID;
         } else {
-            printf("Error: %s", mysqli_error(self::$connect));
-            exit(0);
+            //printf("Error: %s", mysqli_error(self::$connect));
+            //exit(0);
+            return false;
         }
     }
 
@@ -132,8 +133,18 @@ class Mysql
 
     public static function num($value = "")
     {
-        if (empty($value)) $value = self::$queryID;
-        return mysqli_num_rows($value);
+        if (empty($value)) {
+
+            if (!empty(self::$queryID)) {
+                $value = self::$queryID;
+                return mysqli_num_rows($value);
+            }else{
+                return 0;
+            }
+        }else{
+            return mysqli_num_rows($value);
+        }
+
     }
 
     public static function getID()

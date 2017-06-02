@@ -45,7 +45,7 @@ class CUser
             } else {
                 System::$title = "Правила";
                 $page = Mysql::squery("SELECT * FROM static WHERE `name`='rules'");
-                Temp::$result['speedbar'] .= " » Правила";
+                //Temp::$result['speedbar'] .= " » Правила";
                 Temp::load("static");
                 Temp::set("{static}", $page['static']);
                 Temp::set("{description}", $page['description']);

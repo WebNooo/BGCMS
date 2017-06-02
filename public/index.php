@@ -9,3 +9,5 @@ require_once SYS ."/init.php";
 system\Router::dispatch();
 system\System::include_mods();
 system\System::run();
+
+//\system\Mail::send("webnooo@gmail.com", "<div style='color: red;'>BlackGame Message</div>");

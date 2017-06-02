@@ -105,6 +105,7 @@ class User
                         if (Mysql::num(Mysql::query("SELECT * FROM users WHERE ip='" .  Mysql::safesql($_SERVER['REMOTE_ADDR']) . "'")) >= config::$user_user_one_ip) Parse::jsi('info', "Вы привысили лимит пользователей на 1 IP"); else {
                             @Mysql::query("INSERT INTO users (username, password, email, registration_date, ip, group_id) VALUES ('" .  Mysql::safesql($data['username']) . "','" .  Mysql::safesql(md5($data['password1'])) . "','" .  Mysql::safesql($data['email']) . "','" . time() . "','" .  Mysql::safesql($_SERVER['REMOTE_ADDR']) . "','" . config::$user_group . "')");
                             setcookie("add_user", "success", time() + 60);
+                            Mail::send($data['email'], "adduser");
                             Parse::jsi('reload');
                         }
                     }

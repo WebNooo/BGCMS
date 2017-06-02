@@ -94,7 +94,7 @@ final class Router
             $breadcrumbs[] = self::$route[2];
         }
 
-        var_dump($path);
+        //var_dump($path);
         Temp::$breadcrumbs = implode(config::$site_separator, $breadcrumbs);
     }
 
