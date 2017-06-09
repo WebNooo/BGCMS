@@ -353,4 +353,16 @@ $(document).ready(function () {
         });
     });
 
+    $("button[name=reset]").on('click', function () {
+        $.ajax({
+            url: site+"/post.php?post=reset",
+            type: "POST",
+            data: {
+                "user": getInput("reset_user")
+            }, success: function (data) {
+                notify(data)
+            }
+        });
+    });
+
 });

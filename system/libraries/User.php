@@ -37,7 +37,7 @@ class User
         if (empty($errors)) {
             Mysql::query("SELECT users.*, groups.* FROM users, groups WHERE username='".Mysql::safesql($data['username'])."' AND password='" . md5(Mysql::safesql($data['password'])) . "' AND users.group_id=groups.idg");
             if (Mysql::num() == 1) {
-                self::$token = Parse::token(25);
+                self::$token = Parse::random(25);
                 $user = Mysql::assoc();
                 if ($user['site_view'] == 1) {
                     $_SESSION['user'] = $user;
@@ -122,9 +122,37 @@ class User
 
     }
 
-    static function resetUser()
+    static function updateTokenForPassword($user)
     {
+            $t = Parse::random(25);
+            Mysql::query("SELECT * FROM users WHERE (username = '$user') OR (email = '$user')");
+            if (Mysql::num() == 1){
+                $u = Mysql::fetch();
+                Mysql::update('users', "token::$t", "id='".$u['id']."'");
+                $getMailParam = Mysql::squery("SELECT * FROM mail_message WHERE function='resetuser1'");
+                $getMailParam['message'] = str_replace("{%reset_password%}", config::$site_adr."resetuser/$t", $getMailParam['message']);
+                Mail::send($u['email'], $getMailParam, false);
+                Parse::jsi("success", "Send link on email");
+            }else{
+                Parse::jsi("info", "Не удалось найти или у вас более 1 аккаунта на email,<br> попробуйте использовать имя пользователя!");
+            }
+    }
 
+    static function changePassword($token){
+        $p = Parse::random(8);
+        Mysql::query("SELECT * FROM users WHERE token='$token'");
+        if (Mysql::num() > 0){
+            $u = Mysql::fetch();
+            Mysql::update("users","password::".md5($p), "id='".$u['id']."'");
+            $getMailParam = Mysql::squery("SELECT * FROM mail_message WHERE function='resetuser2'");
+            $getMailParam['message'] = str_replace("{%username%}", $u['username'], $getMailParam['message']);
+            $getMailParam['message'] = str_replace("{%new_password%}", $p, $getMailParam['message']);
+            $getMailParam['message'] = str_replace("{%site%}", config::$site_adr, $getMailParam['message']);
+            Mail::send($u['email'], $getMailParam, false);
+            //Parse::jsi("success", "Новый пароль отправлен на вашу почту");
+        }else{
+            Parse::$inform['info'] = "Not found valid code";
+        }
     }
 
 }

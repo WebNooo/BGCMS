@@ -7,6 +7,7 @@ class lang
 
     static $user_1 = "Пользователь не найден";
     static $user_2 = "ID содержит запрещенные символы";
+    static $user_gender = array("Не указан", "Мужской", "Женский");
     static $user_ = "";
 
     static $auth_1 = "Не правильный логин или пароль";
@@ -49,6 +50,10 @@ class lang
 
     static $page_index = "Главная страница";
     static $page_ = "";
+
+    static $msg_success = "Выполнено";
+    static $msg_danger = "Ошибка";
+    static $msg_info = "Информация";
 
     static $temp_1 = "Невозможно загрузить шаблон";
 

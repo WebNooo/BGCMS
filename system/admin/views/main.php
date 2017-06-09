@@ -128,7 +128,7 @@
             <div class="list-group-item">
                 <div class="widget-past-days__info">
                     <small>Посещение сайта</small>
-                    <h3><?php echo \system\Mysql::num(\system\Mysql::query("SELECT * FROM visitors WHERE v_date='" . mktime(0, 0, 0, date("d"), date("m"), date("Y")) . "'")); ?></h3>
+                    <h3><?php echo \system\Mysql::num(\system\Mysql::query("SELECT * FROM visitors WHERE v_date='" . date("Y-m-d", time()) . "'")); ?></h3>
                 </div>
             </div>
 

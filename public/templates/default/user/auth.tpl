@@ -24,7 +24,7 @@
                 <label>Пароль</label>
                 <input type="password" name="auth_password" id="login_password">
                 <button name="authStart">Войти</button>
-                <a href="/resetaccount">Забыли пароль?</a>
+                <a href="/resetuser">Забыли пароль?</a>
                 <a href="/adduser">Регистрация</a>
             </div>
     </div>

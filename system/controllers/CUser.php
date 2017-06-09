@@ -7,6 +7,7 @@ class CUser
 
     static function authUser()
     {
+        Temp::$folder = "user";
         Temp::load('auth');
         if (User::isUser()) {
             $user = User::getUser();
@@ -25,6 +26,7 @@ class CUser
 
     static function addUser()
     {
+        Temp::$folder = "user";
         if (!User::isUser()) {
             if (isset($_COOKIE['rules']) == 1) {
                 Temp::load("registration");
@@ -70,14 +72,23 @@ class CUser
 
     static function profileUser($id = null)
     {
+        Temp::$folder = "user";
         $getIDUser = ($id == "") ? $id = User::isUser('username') : $getIDUser = $id;
-        Mysql::query("SELECT * FROM users WHERE username='" . Mysql::safesql($getIDUser) . "'");
+        Mysql::query("SELECT users.*, groups.*, city.*, country.* FROM users, groups, city, country WHERE city.id_city=users.city AND country.id_country=users.country AND groups.idg=users.group_id AND users.username='" . Mysql::safesql($getIDUser) . "'");
         if (Mysql::num() > 0) {
             $user = Mysql::fetch();
             System::$title = $user['username'];
-            Temp::load("userinfo");
+            Temp::load("profile");
+            $group = str_replace("{%title%}", $user['title'], $user['site_style']);
             Temp::set('{username}', $user['username']);
             Temp::set('{fullname}', $user['fullname']);
+            Temp::set('{gender}', lang::$user_gender[$user['gender']]);
+            Temp::set('{group}', $group);
+            Temp::set('{create_time}', Parse::dateTime($user['registration_date']));
+            Temp::set('{auth_time}', Parse::dateTime($user['auth_date']));
+            Temp::set('{country}', $user['name_country']);
+            Temp::set('{city}', $user['name_city']);
+
             if ($user['online'] > (time() - 180)) {
                 Temp::set('[online]', "");
                 Temp::set('[/online]', "");
@@ -99,7 +110,8 @@ class CUser
     static function updateUser()
     {
         $user = Mysql::squery("SELECT users.*, groups.*, country.*, city.* FROM users, groups, country, city WHERE users.id='" . User::isUser('id') . "'");
-        Temp::load('update_user');
+        Temp::$folder = "user";
+        Temp::load('edit');
         Temp::set("{uname}", $user['username']);
         Temp::set("{fullname}", $user['fullname']);
         Temp::set("{editmail}", $user['email']);
@@ -114,10 +126,31 @@ class CUser
 
     }
 
-    static function resetUser()
+    static function resetUser($token="")
     {
-        System::$title = "Восстановление пароля";
-        Temp::load("lostpassword");
+        if (!User::isUser()) {
+            Temp::$folder = "user";
+            Temp::load("reset");
+            if (empty($token)) {
+                Temp::set('[not-confirmed]', "");
+                Temp::set('[/not-confirmed]', "");
+                Temp::set_block("'\\[confirmed\\](.*?)\\[/confirmed\\]'si", "");
+            } else {
+                Temp::set('[confirmed]', "");
+                Temp::set('[/confirmed]', "");
+                Temp::set_block("'\\[not-confirmed\\](.*?)\\[/not-confirmed\\]'si", "");
+                User::changePassword($token);
+            }
+            Temp::compile('content');
+            Temp::clear();
+        }else{
+            Parse::$inform['info'] = "Данная страница недоступна для вас";
+        }
+    }
+
+    static function im(){
+        Temp::$folder = "user";
+        Temp::load("message");
         Temp::compile('content');
         Temp::clear();
     }

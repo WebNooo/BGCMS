@@ -19,8 +19,7 @@ class CComments
                 Parse::jsi("success", "add comment");
             } else Parse::jsi('danger', "error text");
         } else Parse::jsi('danger', "error id");
-
-    }
+}
 
     static function edit()
     {

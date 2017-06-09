@@ -38,6 +38,10 @@ if (isset($_GET['post'])) {
         case "search":
             system\CPost::search($_POST['search'], $_POST['js']);
             break;
+
+        case "reset":
+            system\User::updateTokenForPassword($_POST['user']);
+            break;
     }
 } else {
     if (isset($_GET['admin'])) {

@@ -44,23 +44,23 @@
             <div class="block-title"><h3>Меню</h3><i class="fa fa-list"></i></div>
             <div class="block-content">
                 <ul class="nav-ul">
-                    <li><a href="/buy/vip">Купить VIP</a></li>
-                    <li><a href="http://bans.bgsrv.ru">Банлист</a></li>
-                    <!--          <li><a href="#">меню</a></li>
-                              <li><a href="#">меню</a></li>
-                              <li><a href="#">меню</a></li>
-                              <li><a href="#">меню</a></li>
-                              <li><a href="#">меню</a></li>
-                              <li class="dropdown"><a href="#">меню</a>
-                                <ul>
-                                  <li><a href="#">меню 1</a></li>
-                                  <li><a href="#">меню 2</a></li>
-                                  <li><a href="#">меню 3</a></li>
-                                  <li><a href="#">меню 4</a></li>
-                                  <li><a href="#">меню 5</a></li>
-                                  <li><a href="#">меню 6</a></li>
-                                </ul>
-                              </li>-->
+                    <!-- <li><a href="/buy/vip">Купить VIP</a></li>
+                     <li><a href="http://bans.bgsrv.ru">Банлист</a></li>
+                               <li><a href="#">меню</a></li>
+                               <li><a href="#">меню</a></li>
+                               <li><a href="#">меню</a></li>
+                               <li><a href="#">меню</a></li>
+                               <li><a href="#">меню</a></li>
+                               <li class="dropdown"><a href="#">меню</a>
+                                 <ul>
+                                   <li><a href="#">меню 1</a></li>
+                                   <li><a href="#">меню 2</a></li>
+                                   <li><a href="#">меню 3</a></li>
+                                   <li><a href="#">меню 4</a></li>
+                                   <li><a href="#">меню 5</a></li>
+                                   <li><a href="#">меню 6</a></li>
+                                 </ul>
+                               </li>-->
                 </ul>
             </div>
         </div>

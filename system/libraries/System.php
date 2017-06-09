@@ -5,6 +5,8 @@ namespace system;
 class System{
 
     public static function run(){
+        Router::dispatch();
+        self::include_mods();
         if (self::offline()) {
             Parse::notify();
             Temp::load('main');
@@ -51,9 +53,14 @@ class System{
     static function visitors()
     {
         if (!isset($_SESSION['visit'])) {
-            Mysql::query("SELECT * FROM visitors WHERE v_ip='{$_SERVER['REMOTE_ADDR']}' AND v_date='" . mktime(0, 0, 0, date("d"), date("m"), date("Y")) . "'");
+            Mysql::query("SELECT * FROM visitors WHERE v_ip='{$_SERVER['REMOTE_ADDR']}' AND v_date='" . date("Y-m-d", time()) . "'");
             if (Mysql::num() == 0) {
-                Mysql::query("INSERT INTO visitors (v_ip, v_date, v_agent) VALUES ('" . $_SERVER['REMOTE_ADDR'] . "','" . mktime(0, 0, 0, date("d"), date("m"), date("Y")) . "', '" . $_SERVER['HTTP_USER_AGENT'] . "')");
+                $type = "user";
+                if (strpos($_SERVER['HTTP_USER_AGENT'], "Yandex")) $type = "Yandex";
+                if (strpos($_SERVER['HTTP_USER_AGENT'], "bingbot")) $type = "Bing";
+                if (strpos($_SERVER['HTTP_USER_AGENT'], "Google")) $type = "Google";
+                if (strpos($_SERVER['HTTP_USER_AGENT'], "Mail.RU")) $type = "Mail.RU";
+                Mysql::query("INSERT INTO visitors (v_ip, v_date, v_agent, v_type) VALUES ('" . $_SERVER['REMOTE_ADDR'] . "','" . date("Y-m-d", time()) . "', '" . $_SERVER['HTTP_USER_AGENT'] . "', '{$type}')");
                 $_SESSION['visit'] = $_SERVER['REMOTE_ADDR'];
             }
         }
@@ -134,27 +141,23 @@ class System{
         return "<script src='" . config::$site_adr . "ajax'></script>
 <script src='" . config::$site_adr . "function'></script>
 <script>var site = \"" . config::$site_adr . "\";
-    var site_title_msg_info = \"Информация\";
-    var site_title_msg_success = \"Выполнено\";
-    var site_title_msg_danger = \"Ошибка\";
+    var site_title_msg_info = \"".lang::$msg_info."\";
+    var site_title_msg_success = \"".lang::$msg_success."\";
+    var site_title_msg_danger = \"".lang::$msg_danger."\";
 </script>";
     }
 
 
     static function exception()
     {
-        lang::$error_2 = str_replace('{%site_adr%}', config::$site_adr, lang::$error_2);
+
         header("HTTP/1.0 404 Not Found");
-        echo "
-        <html>
-            <head>
-                <title>".lang::$error_1 . "</title>
-            </head>
-            <body>
-            " . lang::$error_2 . "
-            </body>
-        </html>
-        ";
+        lang::$error_2 = str_replace('{%site_adr%}', config::$site_adr, lang::$error_2);
+        $getPage = file_get_contents(PUB . "/shared/site_404.html");
+        $getPage = str_replace("{%title%}", lang::$error_1, $getPage);
+        $getPage = str_replace("{%body%}", lang::$error_2, $getPage);
+
+        echo $getPage;
         exit(0);
     }
 

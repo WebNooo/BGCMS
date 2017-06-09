@@ -11,6 +11,7 @@ class Temp
     static $result = array('content' => '', 'info' => '', 'breadcrumbs' => "", 'title' => "", 'reply' => "", 'vote'=>"");
     static $template_parse_time = 0;
     static $breadcrumbs = "";
+    static $folder = "";
 
     public static function set($name, $var)
     {
@@ -28,7 +29,10 @@ class Temp
 
     public static function load($tpl_name)
     {
-        self::$dir = PUB . "/templates/" . config::$site_skin;
+        if (empty(self::$folder))
+            self::$dir = PUB . "/templates/" . config::$site_skin;
+        else
+            self::$dir = PUB . "/templates/" . config::$site_skin."/".self::$folder;
 
         $time_before = self::get_real_time();
         if ($tpl_name == '' || !file_exists(self::$dir . DIRECTORY_SEPARATOR . $tpl_name . ".tpl")) {
@@ -78,6 +82,7 @@ class Temp
         self::$block_data = array();
         self::$copy_template = NULL;
         self::$template = NULL;
+        self::$folder = "";
     }
 
     public static function gclear()
@@ -87,6 +92,7 @@ class Temp
         self::$result = array();
         self::$copy_template = NULL;
         self::$template = NULL;
+        self::$folder = "";
     }
 
     static function declination($matches = array())

@@ -63,7 +63,7 @@ class Parse
         return false;
     }
 
-    public static function token($length = 6, $code = "")
+    public static function random($length = 6, $code = "")
     {
         $chars = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRQSTUVWXYZ0123456789";
         $len = strlen($chars) - 1;

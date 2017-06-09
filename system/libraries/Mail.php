@@ -4,9 +4,12 @@ namespace system;
 
 class Mail {
 
-    public static function send ($toAddress, $function) {
+    public static function send ($toAddress, $function, $f=true) {
 
-        $getMailParam = Mysql::squery("SELECT * FROM mail_message WHERE function='$function'");
+        if ($f)
+            $getMailParam = Mysql::squery("SELECT * FROM mail_message WHERE function='$function'");
+        else
+            $getMailParam = $function;
 
         $mail = new PHPMailer();
         $mail->From = config::$email_from_adr;
